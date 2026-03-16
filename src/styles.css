@@ -4,3 +4,44 @@
 
 /* custom styles */
 body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+/* Animación desde la izquierda */
+.slide-in {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.slide-in.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Animación desde la derecha */
+.slide-in-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.slide-in-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Animaciones para proyectos */
+.hb-item {
+  transform-origin: center;
+  transform: translateX(-40px) rotateX(18deg) scale(0.98);
+  opacity: 0;
+  transition: transform 1200ms ease-out, opacity 1200ms ease;
+}
+
+.hb-item.from-right {
+  transform: translateX(40px) rotateX(18deg) scale(0.98);
+}
+
+.hb-item.hb-enter {
+  transform: translateX(0) rotateX(0deg) scale(1);
+  opacity: 1;
+}

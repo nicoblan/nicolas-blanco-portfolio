@@ -1,11 +1,11 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function ProjectCard({ title, desc, shortDesc, img, url, year, tags, onClick }) {
+function ProjectCard({ title, desc, shortDesc, img, url, year, tags, onClick, className }) {
   return (
     <button 
       onClick={onClick}
-      className="flex flex-col h-full w-full text-left group bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-2xl hover:shadow-xl transition-all duration-300 hover:scale-105"
+      className={`flex flex-col h-full w-full text-left group bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-transform duration-300 transition-shadow duration-300 ${className}`}
     >
       <div className="h-48 rounded-xl overflow-hidden bg-white shadow-md mb-4">
         <img src={img} alt={title} className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" />
@@ -78,6 +78,28 @@ function ProjectModal({ project, onClose }) {
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setMounted(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const section = document.getElementById('proyectos');
+    if (section) {
+      observer.observe(section);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const items = [
     { 
@@ -113,8 +135,8 @@ export default function Projects() {
     <>
       <section id="proyectos" className="py-0">
         <div className="mb-8">
-          <h3 className="text-3xl font-bold text-slate-900">Proyectos Destacados</h3>
-          <p className="mt-2 text-slate-600">
+          <h3 className={`text-3xl font-bold text-slate-900 hb-item ${mounted ? 'hb-enter' : ''}`} style={{ transitionDelay: mounted ? '120ms' : '0ms' }}>Proyectos Destacados</h3>
+          <p className={`mt-2 text-slate-600 hb-item from-right ${mounted ? 'hb-enter' : ''}`} style={{ transitionDelay: mounted ? '220ms' : '0ms' }}>
             Una selección de mis trabajos más recientes en desarrollo web, aplicaciones interactivas y branding. Cada proyecto representa un desafío único y una solución creativa.
           </p>
         </div>
@@ -124,6 +146,8 @@ export default function Projects() {
             <ProjectCard 
               key={i} 
               {...it} 
+              className={`hb-item ${i % 2 === 0 ? '' : 'from-right'} ${mounted ? 'hb-enter' : ''}`}
+              style={{ transitionDelay: mounted ? `${320 + i * 100}ms` : '0ms' }}
               onClick={() => setSelectedProject(it)}
             />
           ))}
