@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop';
 import Inicio from './views/Inicio';
 import Proyectos from './views/Proyectos';
 import SobreMi from './views/SobreMi';
@@ -9,6 +10,7 @@ import Contacto from './views/Contacto';
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="bg-slate-50 min-h-screen text-slate-900">
         <header className="py-4 sticky top-0 z-50 flex justify-center">
           <nav className="bg-white/80 backdrop-blur rounded-full shadow-lg px-6 py-3 flex gap-4">

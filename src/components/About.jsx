@@ -51,17 +51,23 @@ export default function About() {
 
         {/* Imagen */}
         <div className={`flex justify-center md:justify-end hb-item from-right ${mounted ? 'hb-enter' : ''}`} style={{ transitionDelay: mounted ? '820ms' : '0ms' }}>
-          <div className="relative">
-            <div className="w-80 h-80 rounded-full overflow-hidden shadow-2xl border-8 border-white">
+          <div className="relative group">
+            <div className="w-full max-w-sm aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform transition-transform duration-500 group-hover:scale-[1.02]">
               <img 
                 src="/foto-perfil.jpeg" 
                 alt="Nicolas Blanco" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
               />
             </div>
-            {/* Decoración */}
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-indigo-600 rounded-full opacity-20"></div>
-            <div className="absolute -top-4 -left-4 w-16 h-16 bg-yellow-400 rounded-full opacity-30"></div>
+            {/* Decoración cuadrada */}
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-indigo-600 rounded-2xl -z-10 opacity-10"></div>
+            <div className="absolute -top-4 -left-4 w-20 h-20 bg-yellow-400 rounded-2xl -z-10 opacity-20"></div>
+            
+            {/* Pequeño badge decorativo */}
+            <div className="absolute -bottom-2 -left-2 bg-white px-4 py-2 rounded-lg shadow-lg border border-slate-100 flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">Disponible para trabajar</span>
+            </div>
           </div>
         </div>
       </div>
