@@ -1,26 +1,50 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 
-function ProjectCard({ title, desc, shortDesc, img, url, year, tags, onClick, className }) {
+function ProjectCard({ title, desc, shortDesc, img, url, year, tags, onClick, className, style }) {
   return (
     <button 
       onClick={onClick}
-      className={`flex flex-col h-full w-full text-left group bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-transform duration-300 transition-shadow duration-300 ${className}`}
+      style={style}
+      className={`flex flex-col md:flex-row-reverse w-full text-left group bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl overflow-hidden hover:shadow-xl hover:scale-[1.01] transition-all duration-500 border border-slate-200/60 ${className}`}
     >
-      <div className="h-48 rounded-xl overflow-hidden bg-white shadow-md mb-4">
-        <img src={img} alt={title} className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" />
+      {/* Contenedor de Imagen (Más bajo en Desktop) */}
+      <div className="w-full md:w-1/3 h-48 md:h-56 overflow-hidden bg-white relative">
+        <img 
+          src={img} 
+          alt={title} 
+          className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700 ease-out" 
+        />
+        <div className="absolute inset-0 bg-indigo-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       </div>
-      <div className="flex justify-between items-start mb-2">
-        <h4 className="text-lg font-bold text-slate-800">{title}</h4>
-        <span className="text-xs text-slate-400 font-medium">{year}</span>
-      </div>
-      <p className="text-xs text-slate-600 mb-3 line-clamp-2">{shortDesc}</p>
-      <div className="flex flex-wrap gap-2 mt-auto">
-        {tags.map((tag, i) => (
-          <span key={i} className="text-xs px-2 py-1 bg-white rounded-full text-slate-600 font-medium">
-            {tag}
+
+      {/* Contenedor de Información (Más compacto) */}
+      <div className="flex flex-col p-6 md:p-8 md:w-2/3 justify-center">
+        <div className="flex justify-between items-center mb-3">
+          <span className="text-[10px] font-bold tracking-widest text-indigo-600 uppercase bg-indigo-50 px-2.5 py-1 rounded-full">
+            {year}
           </span>
-        ))}
+          <div className="h-[1px] flex-grow mx-4 bg-slate-100"></div>
+        </div>
+        
+        <h4 className="text-xl md:text-2xl font-bold text-slate-800 mb-2 group-hover:text-indigo-600 transition-colors duration-300">
+          {title}
+        </h4>
+        
+        <p className="text-slate-600 mb-4 line-clamp-2 text-sm md:text-base leading-relaxed">
+          {shortDesc}
+        </p>
+
+        <div className="flex flex-wrap gap-1.5 mt-auto">
+          {tags.map((tag, i) => (
+            <span 
+              key={i} 
+              className="text-[10px] md:text-xs px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-500 font-medium shadow-sm group-hover:border-indigo-100 transition-colors"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
     </button>
   )
@@ -30,42 +54,52 @@ function ProjectModal({ project, onClose }) {
   if (!project) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" onClick={onClose}>
-      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
-        <div className="p-6">
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50" onClick={onClose}>
+      <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="p-6 md:p-8">
           <div className="flex justify-between items-start mb-4">
-            <h3 className="text-2xl font-bold text-slate-900">{project.title}</h3>
-            <button onClick={onClose} className="text-slate-400 hover:text-slate-600 text-2xl leading-none">
-              ×
+            <div>
+              <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">{project.year}</span>
+              <h3 className="text-2xl font-bold text-slate-900 mt-1">{project.title}</h3>
+            </div>
+            <button onClick={onClose} className="bg-slate-100 hover:bg-slate-200 text-slate-500 p-2 rounded-full transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
           
-          <div className="mb-4 rounded-xl overflow-hidden">
-            <img src={project.img} alt={project.title} className="w-full h-64 object-cover" />
+          <div className="mb-6 rounded-xl overflow-hidden shadow-md">
+            <img src={project.img} alt={project.title} className="w-full h-64 md:h-80 object-cover" />
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-6">
             {project.tags.map((tag, i) => (
-              <span key={i} className="text-sm px-3 py-1 bg-slate-100 rounded-full text-slate-700 font-medium">
+              <span key={i} className="text-xs px-3 py-1.5 bg-slate-100 rounded-lg text-slate-700 font-medium">
                 {tag}
               </span>
             ))}
           </div>
 
-          <p className="text-slate-600 mb-6 leading-relaxed">{project.desc}</p>
+          <div className="prose prose-slate max-w-none mb-8">
+            <p className="text-slate-600 text-base leading-relaxed">{project.desc}</p>
+          </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <a 
               href={project.url} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition text-center"
+              className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 text-center flex items-center justify-center gap-2"
             >
-              Ir al Repositorio →
+              Ver Repositorio
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
             </a>
             <button 
               onClick={onClose}
-              className="px-6 py-3 bg-slate-200 text-slate-700 rounded-lg font-semibold hover:bg-slate-300 transition"
+              className="px-6 py-3 bg-slate-100 text-slate-700 rounded-xl font-bold hover:bg-slate-200 transition text-center"
             >
               Cerrar
             </button>
@@ -136,18 +170,18 @@ export default function Projects() {
       <section id="proyectos" className="py-0">
         <div className="mb-8">
           <h3 className={`text-3xl font-bold text-slate-900 hb-item ${mounted ? 'hb-enter' : ''}`} style={{ transitionDelay: mounted ? '120ms' : '0ms' }}>Proyectos Destacados</h3>
-          <p className={`mt-2 text-slate-600 hb-item from-right ${mounted ? 'hb-enter' : ''}`} style={{ transitionDelay: mounted ? '220ms' : '0ms' }}>
-            Una selección de mis trabajos más recientes en desarrollo web, aplicaciones interactivas y branding. Cada proyecto representa un desafío único y una solución creativa.
+          <p className={`mt-3 text-slate-600 hb-item from-right ${mounted ? 'hb-enter' : ''}`} style={{ transitionDelay: mounted ? '220ms' : '0ms' }}>
+            Una selección de mis trabajos más recientes en desarrollo de software. Cada proyecto representa un desafío técnico resuelto con tecnologías modernas y buenas prácticas.
           </p>
         </div>
         
-        <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+        <div className="mt-6 flex flex-col gap-6">
           {items.map((it, i) => (
             <ProjectCard 
               key={i} 
               {...it} 
               className={`hb-item ${i % 2 === 0 ? '' : 'from-right'} ${mounted ? 'hb-enter' : ''}`}
-              style={{ transitionDelay: mounted ? `${320 + i * 100}ms` : '0ms' }}
+              style={{ transitionDelay: mounted ? `${320 + i * 150}ms` : '0ms' }}
               onClick={() => setSelectedProject(it)}
             />
           ))}
