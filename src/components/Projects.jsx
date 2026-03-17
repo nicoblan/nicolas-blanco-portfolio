@@ -137,9 +137,9 @@ export default function Projects() {
 
   const items = [
     { 
-      title: 'Frontend Purosmates',
-      shortDesc: 'Frontend de un e-commerce desarrollado con React, Vite y Tailwind CSS. Interfaz dinámica con gestión de productos y carrito de compras.',
-      desc: 'El proyecto front-purosmates es el frontend de un e-commerce, desarrollado principalmente con React para crear una interfaz de usuario dinámica. Utiliza Vite como un build tool rápido para optimizar el desarrollo. La estructura básica está construida sobre HTML, CSS y JavaScript, con Tailwind CSS para un diseño ágil y de utilidad primero. Aunque la información no lo confirma, se puede asumir que usa Axios o Fetch para la comunicación con la API (p. ej., gestión de productos y carrito), y Redux para el manejo del estado global de la aplicación.', 
+      title: 'Front-PurosMates',
+      shortDesc: 'Frontend de una plataforma de e-commerce desarrollada con React y Vite, orientada a ofrecer una experiencia de usuario rápida, moderna y dinámica.',
+      desc: 'El proyecto Front-PurosMates es el frontend de una plataforma de e-commerce desarrollada con React, orientada a ofrecer una experiencia de usuario rápida, moderna y dinámica. La aplicación fue creada utilizando Vite como herramienta de desarrollo y compilación, lo que permite un entorno ágil y optimizado. La interfaz está construida con HTML, CSS y JavaScript, utilizando Tailwind CSS para implementar un diseño responsivo y escalable basado en utilidades. El sistema permite visualizar productos, navegar por el catálogo y gestionar interacciones típicas de una tienda online.', 
       img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder',
       url: 'https://github.com/tomasitogh/front-purosmates',
       year: '2025',
